@@ -10,7 +10,7 @@
 
 1: Fork this Repo
 <p>
-<a href="https://github.com/SAM-OCHU/GSS-Botwa/fork">Fork</a>
+<a href="https://github.com/SamSpeedX/Kibalanga-Bot">Fork</a>
 </p>
 
 ---
@@ -18,7 +18,7 @@
 2: Runn the following command to get QR-code
   ```
   pkg install git
-  git clone https://GitHub.com/SAM-OCHU/GSS-Botwa 
+  git clone https://GitHub.com/SamSpeedX/Kibalanga-Bot 
   npm i dotevn
   npm start
   ```
