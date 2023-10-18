@@ -1,0 +1,73 @@
+{
+  "name": "Kibalanga tz",
+  "description": " Whatsapp bot.",
+  "keywords": [
+    "whatsapp bot",
+    "baileys",
+    "whatsapp-api",
+    "Kibalanga-Bot"
+  ],
+  "repository": "https://github.com/SAM-OCHU/Kibalanga-Bot",
+  "stack": "container",
+  "env": {
+      "BOT_NAME": {
+      "description": "your bot name",
+      "required": false,
+      "value": "Kibalanga-Bot"
+    },
+    "OWNER_NAME": {
+      "description": "put your name",
+      "required": false,
+      "value": "SAM-OCHU"
+    },
+    "OPENAI_API_KEY": {
+      "description": "openai apikey",
+      "required": false,
+      "value": ""
+    },
+    "PALM_API_KEY": {
+      "description": "Palm (bard) api key",
+      "required": false,
+      "value": ""
+    },
+    "REACODING": {
+      "description": "Status",
+      "required": false,
+      "value": ""
+    },
+  "AUTO_READ": {
+      "description": "Auto Read",
+      "required": false,
+      "value": ""
+  },
+  "ALWAYS_ONLINE": {
+      "description": "Online Status",
+      "required": false,
+      "value": ""
+  },
+  "AUTO_ABOUT": {
+      "description": "about",
+      "required": false,
+      "value": ""
+  },
+  "CHAT_BOT": {
+      "description": "chatbot",
+      "required": false,
+      "value": ""
+  }
+  },
+    "buildpacks": [
+    {
+      "url": "koyeb/nodejs"
+    },
+    {
+      "url": "https://github.com/DuckyTeam/heroku-buildpack-imagemagick.git"
+    },
+    {
+      "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
+    },
+    {
+      "url": "https://github.com/clhuang/heroku-buildpack-webp-binaries.git"
+    }
+  ]
+}
