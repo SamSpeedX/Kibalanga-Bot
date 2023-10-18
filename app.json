@@ -7,7 +7,7 @@
     "whatsapp-api",
     "Kibalanga-Bot"
   ],
-  "repository": "https://github.com/SAM-OCHU/Kibalanga-Bot",
+  "repository": "https://github.com/SamSpeedX/Kibalanga-Bot",
   "stack": "container",
   "env": {
       "BOT_NAME": {
