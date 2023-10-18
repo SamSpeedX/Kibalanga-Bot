@@ -32,5 +32,12 @@
 ---
 
 <p>
-  Prepared by <a href="https://GitHub.com/SAM-OCHU">SAM-OCHU</a>
+  Prepared by <a href="https://GitHub.com/SamSpeedX">SAM-OCHU</a>
+  
+</p>
+
+<p>
+<h1>Thank to</h1>
+<a href="https://github.com/MatrixCoder0101">MatrixCoder0101</a>
+
 </p>
