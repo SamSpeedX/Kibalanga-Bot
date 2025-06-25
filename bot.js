@@ -282,7 +282,7 @@ module.exports = client = async (client, m, chatUpdate, store) => {
           // let thumb = "./me.jpg";
           let me = m.sender;
 
-          await loading();
+          // await loading();
           await m.reply(` 
 ╭––『 *${botname}* 』 
 ┆ Hi 👋  
