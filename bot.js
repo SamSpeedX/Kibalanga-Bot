@@ -95,7 +95,7 @@ module.exports = client = async (client, m, chatUpdate, store) => {
       .shift()
       .toLowerCase(); //If you want a single prefix, you replace it with this = const command = body.slice(1).trim().split(/ +/).shift().toLowerCase()
     const args = body.trim().split(/ +/).slice(1);
-    const pushname = m.pushName || "No Name";
+    const pushname = m.pushName || "Sam Software";
     const botNumber = await client.decodeJid(client.user.id);
 
     //const isCreator = [botNumber, ...owner].map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender)
@@ -126,11 +126,11 @@ module.exports = client = async (client, m, chatUpdate, store) => {
         : [];
     const Input = mentionByTag[0] ? mentionByTag[0] : q ? numberQuery : false;
     const qtod = m.quoted ? "true" : "false";
-    const owner = ["255699722149"];
+    const owner = ["255778760701"];
 
     //const thinking = await client.sendMessage(m.chat, { text: 'Thinking...' });
     const botname = process.env.BOT_NAME || "Kibalanga-Bot";
-    const owner_name = process.env.OWNER_NAME || "SAM-OCHU";
+    const owner_name = "SAM-OCHU";
     const mentionUser = [
       ...new Set([
         ...(m.mentionedJid || []),
@@ -228,13 +228,15 @@ module.exports = client = async (client, m, chatUpdate, store) => {
     }
 
     if (process.env.REACODING || ("true" === "true" && command)) {
-      client.sendPresenceUpdate("recording", from);
+      // client.sendPresenceUpdate("recording", from);
+      console.log("sam")
     }
     if (process.env.AUTO_READ || ("true" === "true" && command)) {
       client.readMessages([m.key]);
     }
     if (process.env.ALWAYS_ONLINE || "true" === "true") {
-      client.sendPresenceUpdate("available", m.chat);
+      // client.sendPresenceUpdate("available", m.chat);
+      client.sendPresenceUpdate("unavailable", m.chat);
     } else {
       client.sendPresenceUpdate("unavailable", m.chat);
     }
@@ -776,7 +778,7 @@ function isUrl(str) {
 
 case 'git':
 case 'gitclone':
-  if (!args[0]) return reply(`give me the link?\nExample :\n${prefix}${command} https://github.com/SAM-OCHU/Kibalanga-Bot`);
+  if (!args[0]) return reply(`give me the link?\nExample :\n${prefix}${command} https://github.com/SamSpeedX/Kibalanga-Bot`);
   if (!isUrl(args[0]) && !args[0].includes('github.com')) return m.reply(`Link invalid!!`);
   let regex1 = /(?:https|git)(?::\/\/|@)github\.com[\/:]([^\/:]+)\/(.+)/i;
   let [, user, repo] = args[0].match(regex1) || [];

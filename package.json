@@ -18,8 +18,8 @@
     "bot-md",
     "whatsapp-multi-device"
   ],
-  "base": "https://github.com/SAM-OCHU/Kibalanga-Bot",
-  "author": "SAM-OCHU",
+  "base": "https://github.com/SamSpeedX/Kibalanga-Bot",
+  "author": "Sam Software",
   "license": "MIT",
   "dependencies": {
     "@adiwajshing/baileys": "^5.0.0",
@@ -63,10 +63,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SAM-OCHU/Kibalanga-Bot.git"
+    "url": "git+https://github.com/SamSpeedX/Kibalanga-Bot.git"
   },
   "bugs": {
-    "url": "https://github.com/SAM-OCHU/Kibalanga-Bot/issues"
+    "url": "https://github.com/SamSpeedX/Kibalanga-Bot/issues"
   },
-  "homepage": "https://github.com/SAM-OCHU/Kibalanga-Bot#readme"
+  "homepage": "https://github.com/SamSpeedX/Kibalanga-Bot#readme"
 }

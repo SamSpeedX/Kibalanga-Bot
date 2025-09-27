@@ -4,7 +4,7 @@ const express = require("express");
 const moment = require("moment-timezone");
 const app = express();
 const port = 3000;
-const owner = [255699722149];
+const owner = [255778760701];
 
 const {
   default: goutamConnect,
