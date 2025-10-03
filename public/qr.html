@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Live QR Generator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --accent: #06b6d4;
+      --text: #e2e8f0;
+    }
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      font-family: system-ui, sans-serif;
+      color: var(--text);
+    }
+    .container {
+      background: var(--card);
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+      text-align: center;
+      width: 340px;
+    }
+    h1 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+    #qrImage {
+      width: 280px;
+      height: 280px;
+      background: #fff;
+      border-radius: .5rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      object-fit: contain;
+    }
+    .controls {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+    button {
+      flex: 1;
+      padding: 0.6rem;
+      border: none;
+      border-radius: .5rem;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: .9rem;
+      transition: all .2s;
+    }
+    button.refresh {
+      background: var(--accent);
+      color: #fff;
+    }
+    button.pause {
+      background: #475569;
+      color: #fff;
+    }
+    button:hover { opacity: 0.9; }
+    .status {
+      font-size: .8rem;
+      color: #94a3b8;
+      margin-top: .8rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Live QR Generator</h1>
+    <img id="qrImage" src="/qr?ts=0" alt="QR Code" />
+    <div class="controls">
+      <button class="pause" id="pauseBtn">Pause</button>
+      <button class="refresh" id="refreshBtn">Refresh</button>
+    </div>
+    <div class="status" id="status">Auto-refreshing every 3s...</div>
+  </div>
+
+  <script>
+    const img = document.getElementById("qrImage");
+    const pauseBtn = document.getElementById("pauseBtn");
+    const refreshBtn = document.getElementById("refreshBtn");
+    const status = document.getElementById("status");
+
+    let interval = 3000; // 3 seconds
+    let running = true;
+    let timer;
+
+    function loadQR() {
+      img.src = "/qr?ts=" + Date.now(); // bust cache
+    }
+
+    function start() {
+      stop();
+      timer = setInterval(() => {
+        if (running) loadQR();
+      }, interval);
+      status.textContent = "Auto-refreshing every " + (interval/1000) + "s...";
+    }
+
+    function stop() {
+      clearInterval(timer);
+    }
+
+    pauseBtn.addEventListener("click", () => {
+      running = !running;
+      pauseBtn.textContent = running ? "Pause" : "Resume";
+      status.textContent = running ? "Auto-refreshing..." : "Paused";
+    });
+
+    refreshBtn.addEventListener("click", () => {
+      loadQR();
+    });
+
+    // initial start
+    loadQR();
+    start();
+  </script>
+</body>
+</html>

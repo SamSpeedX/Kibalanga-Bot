@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok Video Downloader</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-gradient {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+        }
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-8 fade-in">
+            <h1 class="text-4xl md:text-6xl font-bold text-white mb-4">
+                <i class="fab fa-tiktok mr-4"></i>TikTok Downloader
+            </h1>
+            <p class="text-xl text-white opacity-90">Download TikTok videos without watermark</p>
+        </div>
+
+        <!-- Main Card -->
+        <div class="max-w-4xl mx-auto">
+            <div class="card-gradient rounded-2xl shadow-2xl p-6 md:p-8 fade-in">
+                <!-- URL Input Form -->
+                <div class="mb-8">
+                    <form id="downloadForm" class="space-y-4">
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <input 
+                                type="url" 
+                                id="tiktokUrl" 
+                                placeholder="Paste TikTok URL here (e.g., https://vt.tiktok.com/ZSjhVuSYx/)" 
+                                class="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                                required
+                            >
+                            <button 
+                                type="submit" 
+                                id="downloadBtn"
+                                class="px-8 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition duration-300 font-semibold flex items-center justify-center"
+                            >
+                                <i class="fas fa-download mr-2"></i>Download
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Loading Spinner -->
+                <div id="loading" class="hidden text-center py-8">
+                    <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+                    <p class="text-gray-600 mt-4">Processing your TikTok video...</p>
+                </div>
+
+                <!-- Error Message -->
+                <div id="error" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6"></div>
+
+                <!-- Results Section -->
+                <div id="results" class="hidden fade-in">
+                    <!-- Video Preview -->
+                    <div class="mb-6 text-center">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">Video Preview</h3>
+                        <video 
+                            id="videoPlayer" 
+                            controls 
+                            class="max-w-full md:max-w-lg mx-auto rounded-lg shadow-lg"
+                            poster=""
+                        >
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+
+                    <!-- Video Information -->
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <!-- Basic Info -->
+                        <div class="bg-white p-6 rounded-lg shadow">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                                <i class="fas fa-info-circle mr-2 text-purple-600"></i>Video Information
+                            </h4>
+                            <div class="space-y-2">
+                                <p><strong>Title:</strong> <span id="videoTitle" class="text-gray-700"></span></p>
+                                <p><strong>Author:</strong> <span id="videoAuthor" class="text-gray-700"></span></p>
+                                <p><strong>Duration:</strong> <span id="videoDuration" class="text-gray-700"></span></p>
+                                <p><strong>Created:</strong> <span id="videoCreated" class="text-gray-700"></span></p>
+                            </div>
+                        </div>
+
+                        <!-- Statistics -->
+                        <div class="bg-white p-6 rounded-lg shadow">
+                            <h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                                <i class="fas fa-chart-bar mr-2 text-purple-600"></i>Statistics
+                            </h4>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="text-center p-3 bg-purple-50 rounded-lg">
+                                    <i class="fas fa-heart text-red-500 text-xl"></i>
+                                    <p class="font-semibold" id="likesCount">0</p>
+                                    <p class="text-sm text-gray-600">Likes</p>
+                                </div>
+                                <div class="text-center p-3 bg-purple-50 rounded-lg">
+                                    <i class="fas fa-comment text-blue-500 text-xl"></i>
+                                    <p class="font-semibold" id="commentsCount">0</p>
+                                    <p class="text-sm text-gray-600">Comments</p>
+                                </div>
+                                <div class="text-center p-3 bg-purple-50 rounded-lg">
+                                    <i class="fas fa-share text-green-500 text-xl"></i>
+                                    <p class="font-semibold" id="sharesCount">0</p>
+                                    <p class="text-sm text-gray-600">Shares</p>
+                                </div>
+                                <div class="text-center p-3 bg-purple-50 rounded-lg">
+                                    <i class="fas fa-eye text-purple-500 text-xl"></i>
+                                    <p class="font-semibold" id="playsCount">0</p>
+                                    <p class="text-sm text-gray-600">Plays</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Download Buttons -->
+                    <div class="text-center space-y-4 md:space-y-0 md:space-x-4">
+                        <button 
+                            id="downloadVideoBtn"
+                            class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition duration-300 font-semibold"
+                        >
+                            <i class="fas fa-video mr-2"></i>Download Video
+                        </button>
+                        <button 
+                            id="downloadAudioBtn"
+                            class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300 font-semibold"
+                        >
+                            <i class="fas fa-music mr-2"></i>Download Audio
+                        </button>
+                        <button 
+                            id="copyLinkBtn"
+                            class="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition duration-300 font-semibold"
+                        >
+                            <i class="fas fa-link mr-2"></i>Copy Video Link
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Instructions -->
+            <div class="mt-8 text-center text-white">
+                <h3 class="text-xl font-semibold mb-4">How to use:</h3>
+                <div class="grid md:grid-cols-3 gap-4 text-sm">
+                    <div class="bg-white bg-opacity-20 p-4 rounded-lg">
+                        <i class="fas fa-copy text-2xl mb-2"></i>
+                        <p>1. Copy TikTok video URL</p>
+                    </div>
+                    <div class="bg-white bg-opacity-20 p-4 rounded-lg">
+                        <i class="fas fa-paste text-2xl mb-2"></i>
+                        <p>2. Paste URL above</p>
+                    </div>
+                    <div class="bg-white bg-opacity-20 p-4 rounded-lg">
+                        <i class="fas fa-download text-2xl mb-2"></i>
+                        <p>3. Download without watermark</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

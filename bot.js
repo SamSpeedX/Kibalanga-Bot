@@ -407,30 +407,48 @@ module.exports = client = async (client, m, chatUpdate, store) => {
         *  };
           brake; */
 
+        // case "delete":
+        // case "futa":
+        // {  
+        //     async (m, {
+        //       client,
+        //       isBotAdmin
+        //    }) => {
+        //       if (!m.quoted) return
+        //       client.sendMessage(m.chat, {
+        //          delete: {
+        //             remoteJid: m.chat,
+        //             fromMe: isBotAdmin ? false : true,
+        //             id: m.quoted.id,
+        //             participant: m.quoted.sender
+        //          }
+        //       })
+        //    };
+        //  };
+        // break;
+
         case "delete":
-        case "futa":
-        {  
-            async: async (m, {
-              client,
-              isBotAdmin
-           }) => {
-              if (!m.quoted) return
-              client.sendMessage(m.chat, {
-                 delete: {
-                    remoteJid: m.chat,
-                    fromMe: isBotAdmin ? false : true,
-                    id: m.quoted.id,
-                    participant: m.quoted.sender
-                 }
-              })
-           };
-         };
+          if (!m.quoted) return m.reply("Reply to a message to delete it");
+          if (!m.isGroup) return m.reply("This command only works in groups");
+          
+          try {
+            await client.sendMessage(m.chat, {
+              delete: {
+                remoteJid: m.chat,
+                fromMe: false,
+                id: m.quoted.id,
+                participant: m.quoted.sender
+              }
+            });
+          } catch (error) {
+            m.reply("Failed to delete message");
+          }
         break;
 
         case "promote":
         {
           
-          async: async (m, {
+          async (m, {
              client,
              text,
              isPrefix,
@@ -651,7 +669,6 @@ module.exports = client = async (client, m, chatUpdate, store) => {
        group: true;
     }
         
-
       case "ping":
         {
             const reactionMessage = {
@@ -901,9 +918,9 @@ case 'gitclone':
       break;
         
 
-      case "tiktok":
+      case "tk":
         {
-          async: async (m, {
+          async (m, {
             client,
             args,
             isPrefix,
@@ -914,23 +931,25 @@ case 'gitclone':
                if (!args[0].match('tiktok.com')) return client.reply(m.chat, global.status.invalid, m)
                client.sendReact(m.chat, '📺', m.key)
                let old = new Date()
-               let json = await Api.tiktok(Func.ttFixed(args[0]))
+              //  let json = await Api.tiktok(Func.ttFixed(args[0]))
+              let json = await igs.tiktok(Func.ttFixed(args[0]))
                if (!json.status) return client.reply(m.chat, Func.jsonFormat(json), m)
-               if (command == 'tiktok' || command == 'tt') return client.sendButton(m.chat, json.data.video, `If you want to get the *original sound* press the button below.\n🍟 *Fetching* : ${((new Date - old) * 1)} ms`, ``, m, [{
+              //  if (command == 'tiktok' || command == 'tt') 
+               return client.sendButton(m.chat, json.data.video, `If you want to get the *original sound* press the button below.\n🍟 *Fetching* : ${((new Date - old) * 1)} ms`, ``, m, [{
                   buttonId: `${isPrefix}tikmp3 ${args[0]}`,
                   buttonText: {
                      displayText: 'Backsound'
                   },
                   type: 1
                }])
-               if (command == 'tikwm') return client.sendButton(m.chat, json.data.videoWM, `If you want to get the *original sound* press the button below.\n🍟 *Fetching* : ${((new Date - old) * 1)} ms`, ``, m, [{
-                  buttonId: `${isPrefix}tikmp3 ${args[0]}`,
-                  buttonText: {
-                     displayText: 'Backsound'
-                  },
-                  type: 1
-               }])
-               if (command == 'tikmp3') return !json.data.audio ? client.reply(m.chat, global.status.fail, m) : client.sendFile(m.chat, json.data.audio, 'audio.mp3', '', m)
+              //  if (command == 'tikwm') return client.sendButton(m.chat, json.data.videoWM, `If you want to get the *original sound* press the button below.\n🍟 *Fetching* : ${((new Date - old) * 1)} ms`, ``, m, [{
+              //     buttonId: `${isPrefix}tikmp3 ${args[0]}`,
+              //     buttonText: {
+              //        displayText: 'Backsound'
+              //     },
+              //     type: 1
+              //  }])
+              //  if (command == 'tikmp3') return !json.data.audio ? client.reply(m.chat, global.status.fail, m) : client.sendFile(m.chat, json.data.audio, 'audio.mp3', '', m)
             } catch (e) {
                console.log(e)
                return client.reply(m.chat, global.status.error, m)
@@ -938,6 +957,54 @@ case 'gitclone':
          }
       };
       break;
+
+
+case "tiktok":
+case "tt":
+case "tik":
+  {
+    if (!args[0]) return m.reply(`Example: ${prefix + command} https://vm.tiktok.com/ZSR7c5G6y/`);
+    
+    if (!args[0].match(/tiktok\.com/)) {
+      return m.reply("Please provide a valid TikTok URL");
+    }
+
+    try {
+      await m.reply("📥 Downloading TikTok video...");
+      
+      // Use api-dylux for TikTok download
+      const tiktokData = await igs.tiktok(args[0]);
+      const tiktokData2 = await igs.tiktok2(args[0]);
+      if (!tiktokData2 || !tiktokData2.video) {
+        return m.reply(`❌ Failed to download TikTok video for: ${args[0]}\n\nError: ${tiktokData2}`);
+      }
+      
+      if (!tiktokData || !tiktokData.video) {
+        return m.reply(`❌ Failed to download TikTok video for: ${args[0]}\n\nError: ${tiktokData.status}`);
+      }
+
+      // Send the video
+      await client.sendMessage(
+        m.chat,
+        {
+          video: { url: tiktokData.video },
+          caption: `*TikTok Download*\n\n` +
+                   `👤 *Author:* ${tiktokData.author || 'N/A'}\n` +
+                   `❤️ *Likes:* ${tiktokData.likes || 'N/A'}\n` +
+                   `💬 *Comments:* ${tiktokData.comments || 'N/A'}\n` +
+                   `🔄 *Shares:* ${tiktokData.shares || 'N/A'}\n` +
+                   `📅 *Created:* ${tiktokData.created || 'N/A'}\n\n` +
+                   `*Powered by SAM TECHNOLOGY*`
+        },
+        { quoted: m }
+      );
+
+    } catch (error) {
+      console.error("TikTok download error:", error);
+      m.reply("❌ Error downloading TikTok video. Please try again.");
+    }
+  }
+  break;
 
       case "antlink":
         {
