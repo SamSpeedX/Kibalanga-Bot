@@ -561,29 +561,6 @@ async function startHisoka() {
 
 startHisoka();
 
-// app.get("/", async (req, res) => {
-//   res.setHeader("content-type", "image/png");
-//   // res.send(await qrcode.toBuffer(QR_GENERATE));
-//   if (typeof QR_GENERATE === "string") {
-//     // res.send(
-//     //   await qrcode.toBuffer(QR_GENERATE, {
-//     //     scale: 8,
-//     //   })
-//     // );
-//     setTimeout( async() => {
-//       res.send(
-//         await qrcode.toBuffer(QR_GENERATE, {
-//           scale: 8,
-//         })
-//       );
-//     }, 3000)
-//   } else {
-//     setTimeout( async() => {
-//       res.sendFile("./media/image/qr.jpg", { root: __dirname });
-//     }, 3000)
-//   }
-// });
-
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'qr.html'));
 });
