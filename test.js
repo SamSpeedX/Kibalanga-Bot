@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 3000;
 // console.log(typeof makeInMemoryStore);
 
 app.get('/', (req, res) => {
+    console.log(typeof makeInMemoryStore);
     res.send(typeof makeInMemoryStore);
     // res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
