@@ -15,5 +15,8 @@
 // });
 
 
-const { makeInMemoryStore } = require("@whiskeysockets/baileys");
+// const { makeInMemoryStore } = require("@whiskeysockets/baileys");
+// console.log(typeof makeInMemoryStore);
+
+const { makeInMemoryStore } = require("@whiskeysockets/baileys/lib/store");
 console.log(typeof makeInMemoryStore);

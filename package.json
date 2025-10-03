@@ -27,7 +27,6 @@
     "@distube/ytdl-core": "^4.13.0",
     "@google-ai/generativelanguage": "^1.0.0",
     "@hapi/boom": "^10.0.0",
-    "@whiskeysockets/baileys": "^6.4.1",
     "api-dylux": "^1.6.5",
     "awesome-phonenumber": "^2.64.0",
     "axios": "^1.12.2",
